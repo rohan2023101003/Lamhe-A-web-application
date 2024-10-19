@@ -8,7 +8,7 @@
 - **Video Processing:** Utilizes the MoviePy module to convert images into video.
 - **Database:** Uses PostgreSQL to store user data and provide authentication.
  ## Deployed successfully on render.com
- - * link : https://lamhe-new.onrender.com/
+ - * link : https://lamhe.onrender.com/
 ## Installation Guide
 
 ### Step 1: Clone the Repository
