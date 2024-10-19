@@ -1,6 +1,4 @@
-Here’s how your README.md for the **Lamhe** web application would look:
 
-```markdown
 # Lamhe: A Basic Web Application for Converting Photos to Videos with Background Audio
 
 **Lamhe** is a web application designed to transform photos into videos by adding background audio. This project was developed as part of the course "Introduction to Software Systems" by **Rohan**, **Himank**, and **Akmal**.
@@ -83,4 +81,4 @@ http://127.0.0.1:5000/
 Congratulations! You have successfully installed and launched the **Lamhe** web application. 🥳 Time to unleash your inner Spielberg and create some epic videos! 🎥📸
 ```
 
-This README provides step-by-step guidance for setting up, configuring, and running your web app.
+
