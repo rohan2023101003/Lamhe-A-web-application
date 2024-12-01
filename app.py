@@ -18,6 +18,7 @@ import time
 import psycopg2
 import requests
 from multiprocessing import Pool
+from dotenv import load_dotenv
 
 # Initialize Flask app
 app = Flask(__name__, static_url_path='', static_folder='static', template_folder='static')
@@ -31,37 +32,43 @@ app.config['JWT_SECRET_KEY'] = '140-073-212'  # Change this to a random secret k
 jwt = JWTManager(app)
 
 
+load_dotenv()
+# Retrieve the password from the environment variable
+db_password = os.getenv('COCKROACH_DB_PWD')
 
 # Ensure the upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 
+# def get_db_connection():
+#     # Decode the base64 certificate
+#     cert_decoded = base64.b64decode(os.environ['ROOT_CERT_BASE64'])
+    
+#     # Define the path to save the certificate
+#     cert_path = '/opt/render/.postgresql/root.crt'
+#     os.makedirs(os.path.dirname(cert_path), exist_ok=True)
+    
+#     # Write the certificate to the file
+#     with open(cert_path, 'wb') as cert_file:
+#         cert_file.write(cert_decoded)
+    
+# #     # Set up the connection string with the path to the certificate
+#     conn = psycopg2.connect(
+#         f"host=jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud "
+#         f"port=26257 dbname=defaultdb user=rohan "
+#         f"password={db_password} sslmode=verify-full "
+#         f"sslrootcert={cert_path}"
+#     )
+#     return conn
+
+#db connection for local host
+
 def get_db_connection():
-    # Decode the base64 certificate
-    cert_decoded = base64.b64decode(os.environ['ROOT_CERT_BASE64'])
-    
-    # Define the path to save the certificate
-    cert_path = '/opt/render/.postgresql/root.crt'
-    os.makedirs(os.path.dirname(cert_path), exist_ok=True)
-    
-    # Write the certificate to the file
-    with open(cert_path, 'wb') as cert_file:
-        cert_file.write(cert_decoded)
-    
-    # Set up the connection string with the path to the certificate
+    # Use f-string to inject the password into the connection string
     conn = psycopg2.connect(
-        "host=jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud "
-        "port=26257 dbname=defaultdb user=rohan "
-        "password=YyoarUCSnxqRTxK5sJdLZg sslmode=verify-full "
-        f"sslrootcert={cert_path}"
+        f"postgresql://rohan:{db_password}@jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud:26257/lamhe?sslmode=verify-full"
     )
     return conn
-
-# #db connection for local host
-# def get_db_connection():
-#     conn = psycopg2.connect("postgresql://rohan:YyoarUCSnxqRTxK5sJdLZg@jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full")
-#     # print("DATABASE_URL: ", os.environ["DATABASE_URL"])
-#     return conn
 
 # Initialize database
 def init_db():
