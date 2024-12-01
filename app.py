@@ -40,35 +40,35 @@ db_password = os.getenv('COCKROACH_DB_PWD')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 
-# def get_db_connection():
-#     # Decode the base64 certificate
-#     cert_decoded = base64.b64decode(os.environ['ROOT_CERT_BASE64'])
+def get_db_connection():
+    # Decode the base64 certificate
+    cert_decoded = base64.b64decode(os.environ['ROOT_CERT_BASE64'])
     
-#     # Define the path to save the certificate
-#     cert_path = '/opt/render/.postgresql/root.crt'
-#     os.makedirs(os.path.dirname(cert_path), exist_ok=True)
+    # Define the path to save the certificate
+    cert_path = '/opt/render/.postgresql/root.crt'
+    os.makedirs(os.path.dirname(cert_path), exist_ok=True)
     
-#     # Write the certificate to the file
-#     with open(cert_path, 'wb') as cert_file:
-#         cert_file.write(cert_decoded)
+    # Write the certificate to the file
+    with open(cert_path, 'wb') as cert_file:
+        cert_file.write(cert_decoded)
     
-# #     # Set up the connection string with the path to the certificate
-#     conn = psycopg2.connect(
-#         f"host=jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud "
-#         f"port=26257 dbname=defaultdb user=rohan "
-#         f"password={db_password} sslmode=verify-full "
-#         f"sslrootcert={cert_path}"
-#     )
-#     return conn
+#     # Set up the connection string with the path to the certificate
+    conn = psycopg2.connect(
+        f"host=jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud "
+        f"port=26257 dbname=defaultdb user=rohan "
+        f"password={db_password} sslmode=verify-full "
+        f"sslrootcert={cert_path}"
+    )
+    return conn
 
 #db connection for local host
 
-def get_db_connection():
-    # Use f-string to inject the password into the connection string
-    conn = psycopg2.connect(
-        f"postgresql://rohan:{db_password}@jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud:26257/lamhe?sslmode=verify-full"
-    )
-    return conn
+# def get_db_connection():
+#     # Use f-string to inject the password into the connection string
+#     conn = psycopg2.connect(
+#         f"postgresql://rohan:{db_password}@jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud:26257/lamhe?sslmode=verify-full"
+#     )
+#     return conn
 
 # Initialize database
 def init_db():
