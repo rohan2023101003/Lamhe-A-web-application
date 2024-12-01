@@ -8,7 +8,7 @@
 - **Video Processing:** Utilizes the MoviePy module to convert images into video.
 - **Database:** Uses PostgreSQL to store user data and provide authentication.
  ## Deployed successfully on render.com
- - * link : https://lamhe.onrender.com/
+ - * link :https://lamhe-a-web-application.onrender.com/home
 ## Installation Guide
 
 ### Step 1: Clone the Repository
@@ -32,34 +32,37 @@ pip install -r requirements.txt
 2. **Comment out** the section for Render connection:
    ```python
    # db connection for render
-   def get_db_connection():
-       # Decode the base64 certificate
-       cert_decoded = base64.b64decode(os.environ['ROOT_CERT_BASE64'])
-
-       # Define the path to save the certificate
-       cert_path = '/opt/render/.postgresql/root.crt'
-       os.makedirs(os.path.dirname(cert_path), exist_ok=True)
-
-       # Write the certificate to the file
-       with open(cert_path, 'wb') as cert_file:
-           cert_file.write(cert_decoded)
-
-       # Set up the connection string with the path to the certificate
-       conn = psycopg2.connect(
-           "host=stream-strider-4060.7s5.aws-ap-south-1.cockroachlabs.cloud "
-           "port=26257 dbname=defaultdb user=akmalali59855_gmail_ "
-           "password=J-3IiGnvZtnFfRZ1CVKh_g sslmode=verify-full "
-           f"sslrootcert={cert_path}"
-       )
-       return conn
+    def get_db_connection():
+        # Decode the base64 certificate
+        cert_decoded = base64.b64decode(os.environ['ROOT_CERT_BASE64'])
+        
+        # Define the path to save the certificate
+        cert_path = '/opt/render/.postgresql/root.crt'
+        os.makedirs(os.path.dirname(cert_path), exist_ok=True)
+        
+        # Write the certificate to the file
+        with open(cert_path, 'wb') as cert_file:
+            cert_file.write(cert_decoded)
+        
+    #     # Set up the connection string with the path to the certificate
+        conn = psycopg2.connect(
+            f"host=jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud "
+            f"port=26257 dbname=defaultdb user=rohan "
+            f"password={db_password} sslmode=verify-full "
+            f"sslrootcert={cert_path}"
+        )
+        return conn
    ```
 
 3. **Uncomment** the section for localhost connection:
    ```python
    # db connection for local host
-   def get_db_connection():
-       conn = psycopg2.connect("postgresql://akmalali59855_gmail_:J-3IiGnvZtnFfRZ1CVKh_g@stream-strider-4060.7s5.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full")
-       return conn
+    def get_db_connection():
+        # Use f-string to inject the password into the connection string
+        conn = psycopg2.connect(
+            f"postgresql://rohan:{db_password}@jhag21615v-8917.8nk.gcp-asia-southeast1.cockroachlabs.cloud:26257/lamhe?sslmode=verify-full"
+        )
+        return conn
    ```
 
 ### Step 4: Run the Application
